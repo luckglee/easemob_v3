@@ -1,9 +1,17 @@
 module Easemob
   autoload(:GroupMessage, File.expand_path('message/group_message', __dir__))
   module Groups
-    def create_group(groupname, description, owner, members: nil, is_public: true, maxusers: 200, is_approval: false)
-      jd = { groupname: groupname, desc: description, public: is_public, owner: owner, users: maxusers, approval: is_approval }
-      jd[:members] = members unless members.nil?
+    def create_group(groupname, desc, is_public, owner,maxusers, members_only, allowinvites, members)
+      jd = { 
+        groupname: groupname, #群组名称，此属性为必须的
+        desc: desc, #群组描述，此属性为必须的
+        public: is_public, #是否是公开群，此属性为必须的
+        owner: owner #群组的管理员，此属性为必须的
+      }
+      jd[:maxusers] = maxusers unless maxusers.nil?#群组成员最大数（包括群主），值为数值类型，默认值200，最大值2000，此属性为可选的
+      jd[:members_only] = members_only unless members_only.nil? # 加入群是否需要群主或者群管理员审批，默认是false
+      jd[:allowinvites] = allowinvites unless allowinvites.nil? #是否允许群成员邀请别人加入此群。 true：允许群成员邀请人加入此群，false：只有群主或者管理员才可以往群里加人。
+      jd[:members] = members unless members.nil?#默认添加客服进群。群组成员，此属性为可选的，但是如果加了此项，数组元素至少一个（注：群主jma1不需要写入到members里面）
       GroupMessage.new request :post, 'chatgroups', json: jd
     end
 
