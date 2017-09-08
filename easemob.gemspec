@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'An unofficial Easemob IM(instant message) service integration gem'
   spec.description   = 'Helping rubyist integration with Easemob IM service (环信 - 即时通讯云) easier.'
-  spec.homepage      = 'https://github.com/bayetech/easemob'
+  spec.homepage      = 'https://github.com/luckglee/easemob_v3'
   spec.license       = 'MIT'
   spec.required_ruby_version = '~> 2.2'
 
