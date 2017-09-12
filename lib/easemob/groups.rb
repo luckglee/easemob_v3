@@ -51,11 +51,11 @@ module Easemob
       GroupMessage.new request :put, "chatgroups/#{group_id}", json: jd
     end
 
-    def user_join_group(group_id, username:)
+    def user_join_group(group_id, username)
       GroupMessage.new request :post, "chatgroups/#{group_id}/users/#{username}"
     end
 
-    def user_leave_group(group_id, username:)
+    def user_leave_group(group_id, username)
       GroupMessage.new request :delete, "chatgroups/#{group_id}/users/#{username}"
     end
 
@@ -67,7 +67,7 @@ module Easemob
       GroupMessage.new request :delete, "chatgroups/#{group_id}/users/#{[*usernames].join(',')}"
     end
 
-    def group_set_owner(group_id, newowner:)
+    def group_set_owner(group_id, newowner)
       GroupMessage.new request :put, "chatgroups/#{group_id}", json: { newowner: newowner }
     end
 
