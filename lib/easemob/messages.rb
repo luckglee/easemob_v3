@@ -15,14 +15,26 @@ module Easemob
       ChatMessage.new request :post, 'messages', json: jd
     end
 
-    def image_to(target, target_type: :users, url:, filename:,
-                 secret: nil, from: nil, image_size: nil, ext: nil)
-      jd = { target_type: target_type, target: [*target],
-             msg: { type: :img, filename: filename, url: url } }
-      jd[:msg][:secret] = secret unless secret.nil?
-      jd[:from] = from unless from.nil?
-      jd[:size] = image_size unless image_size.nil?
-      jd[:ext] = ext unless ext.nil?
+    def image_to(target_type,target,url,filename,secret,from)
+				 
+		jd = {
+			"target_type" : target_type,   #users 给用户发消息。chatgroups: 给群发消息，chatrooms: 给聊天室发消息
+			"target" : target,# 注意这里需要用数组，数组长度建议不大于20，即使只有一个用户，
+										  # 也要用数组 ['u1']，给用户发送时数组元素是用户名，给群组发送时  
+										  # 数组元素是groupid
+			"msg" : {  #消息内容
+				"type" : "img",   # 消息类型
+				"url": url,  #成功上传文件返回的UUID
+				"filename": filename, # 指定一个文件名
+				"secret": secret#, # 成功上传文件后返回的secret
+				#"size" : {
+				#  "width" : 480,
+				#  "height" : 720
+				#}
+			 },
+			"from" : from #表示消息发送者，无此字段Server会默认设置为"from":"admin"，有from字段但值为空串("")时请求失败
+		}
+
       ChatMessage.new request :post, 'messages', json: jd
     end
 
