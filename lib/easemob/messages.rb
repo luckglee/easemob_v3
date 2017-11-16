@@ -14,27 +14,24 @@ module Easemob
       jd[:from] = from unless from.nil? #表示消息发送者。无此字段Server会默认设置为"from":"admin"，有from字段但值为空串("")时请求失败
       ChatMessage.new request :post, 'messages', json: jd
     end
-
-    def image_to(target_type,target,url,filename,secret,from)
+	  
+    def image_to(target_type,target,url,filename,secret,from,width,height)
 				 
 		jd = {
 			"target_type": target_type,   #users 给用户发消息。chatgroups: 给群发消息，chatrooms: 给聊天室发消息
-			"target":target,# 注意这里需要用数组，数组长度建议不大于20，即使只有一个用户，
-										  # 也要用数组 ['u1']，给用户发送时数组元素是用户名，给群组发送时  
-										  # 数组元素是groupid
+			"target":target,# 数组，给用户发送时数组元素是用户名，给群组发送时数组元素是groupid
 			"msg":{  #消息内容
 				"type":"img",   # 消息类型
 				"url": url,  #成功上传文件返回的UUID
 				"filename": filename, # 指定一个文件名
-				"secret": secret#, # 成功上传文件后返回的secret
-				#"size":{
-				#  "width":480,
-				#  "height":720
-				#}
+				"secret": secret, # 成功上传文件后返回的secret
+				"size":{
+				  "width":width,
+				  "height":height
+				}
 			 },
 			"from":from #表示消息发送者，无此字段Server会默认设置为"from":"admin"，有from字段但值为空串("")时请求失败
 		}
-
       ChatMessage.new request :post, 'messages', json: jd
     end
 
