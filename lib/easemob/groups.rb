@@ -68,7 +68,10 @@ module Easemob
     end
 
     def group_set_owner(group_id, newowner)
-      GroupMessage.new request :put, "chatgroups/#{group_id}", json: { newowner: newowner }
+	  jd = { 
+        newowner: newowner
+      }
+      GroupMessage.new request :put, "chatgroups/#{group_id}", json: jd
     end
 
     def add_to_group_block(group_id, to_block_usernames:)
